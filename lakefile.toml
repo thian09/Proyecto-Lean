@@ -1,0 +1,6 @@
+name = "FormalizacionAlgLineal2026"
+version = "0.1.0"
+defaultTargets = ["FormalizacionAlgLineal2026"]
+
+[[lean_lib]]
+name = "FormalizacionAlgLineal2026"
