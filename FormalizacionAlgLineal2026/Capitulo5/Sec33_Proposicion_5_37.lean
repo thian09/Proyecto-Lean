@@ -24,7 +24,7 @@ Si $v \neq 0$ es un vector del espacio y tomamos $I_0 = [v, v, v]$ y $G = [v]$, 
    (`EsLI E (fun w => w ∈ I₀)` es verdadera).
 2. `fun w => w ∈ G` genera el subespacio $\langle v \rangle$ (o todo el espacio si $\dim V = 1$).
 3. No obstante, `I₀.length = 3` y `G.length = 1`.
-El axioma original sin `hNodup` permitiría concluir falsamente que $3 \le 1$,
+El enunciado original sin `hNodup` permitiría concluir falsamente que $3 \le 1$,
 lo cual deriva en una contradicción aritmética inmediata (`False`) haciendo el sistema inconsistente.
 
 Por lo tanto, la hipótesis `hNodup : I₀.Nodup` (ausencia de elementos duplicados en la lista $I_0$)
@@ -34,11 +34,15 @@ cardinalidad matemática del conjunto soporte $\#\{w \in V \mid w \in I_0\}$.
 (Nota: Para la lista generadora $G$, la presencia de duplicados sólo incrementaría `G.length`,
 lo que no compromete la desigualdad $I_0.\text{length} \le G.\text{length}$; la restricción
 `Nodup` es estrictamente requerida en el conjunto acotado superiormente $I_0$). -/
-axiom prop_5_37 {V : Type _} (E : EspacioVectorial V)
+theorem prop_5_37 {V : Type _} (E : EspacioVectorial V)
     (I₀ : List V) (G : List V)
     (hNodup : I₀.Nodup)
     (hLI : EsLI E (fun w => w ∈ I₀))
     (hG : ∀ v : V, Gen E (fun w => w ∈ G) v) :
-    I₀.length ≤ G.length
+    I₀.length ≤ G.length := by
+  rcases teorema_5_34_completamiento E I₀ G hLI hG with ⟨G', hG'_sub, hlen, _⟩
+  have h_le : I₀.length ≤ G'.length := List.Nodup.length_le_of_subset hNodup hG'_sub
+  rw [hlen] at h_le
+  exact h_le
 
 
