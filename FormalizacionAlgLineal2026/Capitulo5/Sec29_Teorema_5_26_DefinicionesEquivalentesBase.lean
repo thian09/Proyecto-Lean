@@ -72,9 +72,9 @@ theorem teorema_5_26_i_iv {V : Type _} (E : EspacioVectorial V) (B : V → Prop)
     (hB : EsBase E B) : LIMaximal E B := by
   constructor
   · exact hB.li
-  · intro G hG_sup ⟨g, hg, _hg_notin⟩
+  · intro G hG_sup ⟨g, hg, hg_notin⟩
     have hLD_union : EsLD E (SetUnion B g) :=
-      corolario_5_23_LD_vuelta E B g (hB.genera g)
+      corolario_5_23_LD_vuelta E B g hg_notin (hB.genera g)
     exact lema_5_20_ii E (SetUnion B g) G (fun v hv => by
       cases hv with
       | inl h => exact hG_sup v h
